@@ -70,7 +70,6 @@ config/proxy/acme.json
 #===================
 # Drupal and Mariadb files persistant storage
 *_files
-codebase*
 jwt
 syn-keys
 
