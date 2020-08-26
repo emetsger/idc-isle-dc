@@ -1,0 +1,14 @@
+name: RDF UI Builder
+type: module
+description: 'Schema.org driven Content Type Builder for Drupal 8'
+package: SEO
+core_version_requirement: ^8 || ^9
+hidden: false
+
+dependencies:
+  - rdfui:rdfui
+
+# Information added by Drupal.org packaging script on 2020-07-28
+version: '8.x-1.0-beta3'
+project: 'rdfui'
+datestamp: 1595969665
