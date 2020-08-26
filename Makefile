@@ -170,7 +170,7 @@ namespaces:
 # Reconstitute the site from environment variables.
 .PHONY: hydrate
 .SILENT: hydrate
-hydrate: update-settings-php update-config-from-environment solr-cores namespaces run-islandora-migrations
+hydrate: update-settings-php update-config-from-environment solr-cores run-islandora-migrations
 	docker-compose exec drupal drush cr -y
 
 # Created by the standard profile, need to be deleted to import a site that was
