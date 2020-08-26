@@ -1,0 +1,17 @@
+name: RDF UI
+type: module
+description: 'Allow the site builders to integrate schema.org mappings to Drupal 8 sites'
+package: SEO
+core_version_requirement: ^8 || ^9
+hidden: false
+
+dependencies:
+  - drupal:node
+  - drupal:rdf
+  - drupal:field
+  - drupal:system (>= 8.5.x)
+
+# Information added by Drupal.org packaging script on 2020-07-28
+version: '8.x-1.0-beta3'
+project: 'rdfui'
+datestamp: 1595969665
