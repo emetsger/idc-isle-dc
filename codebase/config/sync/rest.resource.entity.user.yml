@@ -1,0 +1,25 @@
+uuid: 78ed4fd8-7b2f-476d-b3a3-0a40131350e6
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - jsonld
+    - jwt
+    - serialization
+    - user
+id: entity.user
+plugin_id: 'entity:user'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - basic_auth
+    - cookie
