@@ -1,0 +1,445 @@
+networks:
+  default:
+    internal: true
+  gateway:
+    driver: bridge
+    internal: false
+    name: gateway
+secrets:
+  idp_backchannel:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/idp-backchannel.p12
+  idp_backchannel_pem:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/idp-backchannel.pem
+  idp_browser:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/idp-browser.p12
+  idp_browser_pem:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/idp-browser.pem
+  idp_encryption:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/idp-encryption.key
+  idp_sealer:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/sealer.jks
+  idp_signing:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/idp/idp-signing.key
+  idp_signing_cert:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/sp/idp-signing-cert.pem
+  sp_cert:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/sp/sp-cert.pem
+  sp_key:
+    file: /Users/esm/workspaces/idc/idc-isle-dc/secrets/sp/sp-key.pem
+services:
+  activemq:
+    environment:
+      ACTIVEMQ_PASSWORD: password
+      ACTIVEMQ_WEB_ADMIN_PASSWORD: password
+    image: local/activemq:latest
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.idc-activemq_http.entrypoints: http
+      traefik.http.routers.idc-activemq_http.service: idc-activemq
+      traefik.http.services.idc-activemq.loadbalancer.server.port: '8161'
+    networks:
+      default: {}
+      gateway: {}
+    volumes:
+    - activemq-data:/opt/activemq/data:rw
+  alpaca:
+    environment:
+      ALPACA_ACTIVEMQ_PASSWORD: password
+      ALPACA_KARAF_ADMIN_PASSWORD: password
+    image: local/alpaca:latest
+  cantaloupe:
+    image: local/cantaloupe:latest
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.cantaloupe-redirectscheme.redirectscheme.permanent: "true"
+      traefik.http.middlewares.cantaloupe-redirectscheme.redirectscheme.scheme: https
+      traefik.http.routers.idc-cantaloupe_http.entrypoints: http
+      traefik.http.routers.idc-cantaloupe_http.middlewares: cantaloupe-redirectscheme
+      traefik.http.routers.idc-cantaloupe_http.rule: Host(`islandora-idc.traefik.me`,`islandora-idc-traefik.me`)
+        && PathPrefix(`/cantaloupe`)
+      traefik.http.routers.idc-cantaloupe_http.service: idc-cantaloupe
+      traefik.http.routers.idc-cantaloupe_https.entrypoints: https
+      traefik.http.routers.idc-cantaloupe_https.rule: Host(`islandora-idc.traefik.me`,`islandora-idc-traefik.me`)
+        && PathPrefix(`/cantaloupe`)
+      traefik.http.routers.idc-cantaloupe_https.tls: "true"
+      traefik.http.services.idc-cantaloupe.loadbalancer.server.port: '80'
+    networks:
+      default: {}
+      gateway: {}
+    volumes:
+    - cantaloupe-data:/data:rw
+  crayfits:
+    depends_on:
+    - fits
+    image: local/crayfits:latest
+  drupal:
+    depends_on:
+    - mariadb
+    environment:
+      DRUPAL_DEFAULT_ACCOUNT_EMAIL: admin@example.org
+      DRUPAL_DEFAULT_ACCOUNT_PASSWORD: password
+      DRUPAL_DEFAULT_CANTALOUPE_URL: https://islandora-idc.traefik.me/cantaloupe/iiif/2
+      DRUPAL_DEFAULT_DB_HOST: mariadb-idc.traefik.me
+      DRUPAL_DEFAULT_DB_PASSWORD: password
+      DRUPAL_DEFAULT_DB_ROOT_PASSWORD: password
+      DRUPAL_DEFAULT_FCREPO_HOST: fcrepo-idc.traefik.me
+      DRUPAL_DEFAULT_MATOMO_URL: https://islandora-idc.traefik.me/matomo/
+      DRUPAL_DEFAULT_SALT: 9PPaL0CxZAIcq0l9wxgDGlCZrp7JdT_x7v9gVzpdbUjMt1PqDz3uD0Zy-i16DuJ1-Htuq5hqeg
+      DRUPAL_DEFAULT_SITE_URL: http://islandora-idc.traefik.me
+      DRUPAL_JWT_PRIVATE_KEY: '-----BEGIN RSA PRIVATE KEY-----
+
+        MIIEpAIBAAKCAQEA6uK3nozywVaRCAB3FHdRZNHunSZvN/c31QimZAqQMGxj7JrG
+
+        h1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2wARr/9abIwG5QeNsrJ8GMt3Z/WICn
+
+        NeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRKsk0BfFSMh+4u3JAdD9tUxUx6AAUX
+
+        UCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80Xrrsu1PYATgrsy69stzCln3KlO5O
+
+        xc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9Pa3SNje4UXN+/1xUfQskxafP8CKVS
+
+        r8xxtwzSureiskb5/98moAiutpUtp15yyAm0rwIDAQABAoIBAA0PZh5OwAC4C4Bi
+
+        ZjyhFcmBUr8yL+Twvg3+WSIe5D2NCVFSmc9UbuUdmnaoIIlrf61p6Vo88VCMVfWR
+
+        Z3iFj0/AbJMAHxF0EM1nglLHlEdvM018ec+pbaPeq4LTeA/dfGgDmcyQ53b1lO30
+
+        KMt5st2PIpIDMX0tZTWmXbdP/rqplqiQmdwH0gv8PzEG6Y2ZVLBf5viH5IvVRpg7
+
+        9nDqLfe2W2ylFib+CtleX626xTUzGcJ0aqTRP1UkY4Jj5PI2/yVqttYPkvJtxZco
+
+        5/14AEMcu9FMBhADCSk/0y1TkKCGsi6/VNd78AB/RrZK32HfHCwTwxoXHQoaVKq6
+
+        hNQfokECgYEA+keGdVJrXMDylamARQdDe/nNgljqZZhfkKKYCGeckNqjp3iqfmld
+
+        /tqCPVxAO2mIo8dNNfM2MMv6loEPx9F2REe8k9NbWFrUZ486fMHPeO7WnHt92JyU
+
+        DtfJJSZ1GdCki1PthmpmP8WdoF6VpLvr5AgwuYKAzkMNth+OV/dvgqkCgYEA8EEe
+
+        E3mKvePHV/PVsLt6TaqJcZEKKu6L9EgeDyzv3zz4+2zG8MVctyUFyfSl4EIC/oJy
+
+        X0T5Tj1l4A3mPwZOJfQOkXnr9TaPNff1zjNx12RhUZjFtJU5V+Wn1ldtzs+XwCFc
+
+        x5O/B8LWYgV4bOixNlc6tTRq/m8Txvtde9vPa5cCgYEA3OOdnxRD31QHheFYbRPx
+
+        Eo0xPNae4VWvGmb2SYywmQPuplMQHot+Qvy1L9SoeAc3alzvHytta3nLy2NS+yc5
+
+        +x9ZJxrGJt/bUR8PHqarJu+ch/VR54ih/8uhImGjvknvv2wuWZC0d5pA+RYheofE
+
+        tLgp0MCGUATMKC4HokmmqCkCgYBEjoBTlFIn33CJw3WNyeGbefdgZb/eAlYDbfTN
+
+        5cfJDvAJZr/aAqdzR2hAecQ/mvaZw4V5dAgj8Fc6uRyjjVwNbngdwQm43km9X7VP
+
+        ktSAXw96Jjr8TbygPVNIUYhvBEPMOnjsJlfTkiB0thToFvpChF+nR37kfbPKCv5h
+
+        Epc8nwKBgQCdKyLi54Fm24nqEuZYbAxxGI9TVT7wJjoKGn64JWrXtX7xRltmJC3t
+
+        nLwNCojcbyG4kVB+Myzr2OEtFkO45j83GjrZ4O+jCuSj+AmCxEcc7xNA9cgu9usG
+
+        sQXdGmIIB0Cbk54OyHNdsZgZCXi9GTRF9uvYZKL9qktS+UZMJ1Xz/g==
+
+        -----END RSA PRIVATE KEY-----'
+      DRUPAL_JWT_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----
+
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6uK3nozywVaRCAB3FHdR
+
+        ZNHunSZvN/c31QimZAqQMGxj7JrGh1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2w
+
+        ARr/9abIwG5QeNsrJ8GMt3Z/WICnNeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRK
+
+        sk0BfFSMh+4u3JAdD9tUxUx6AAUXUCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80
+
+        Xrrsu1PYATgrsy69stzCln3KlO5Oxc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9P
+
+        a3SNje4UXN+/1xUfQskxafP8CKVSr8xxtwzSureiskb5/98moAiutpUtp15yyAm0
+
+        rwIDAQAB
+
+        -----END PUBLIC KEY-----
+
+        # Allow for disabling confd
+
+        #
+
+        # Allows for the editing of service configuration files (e.g. nginx default.conf)
+        at runtime without confd
+
+        # stomping on your edits.
+
+        CONFD_NOOP: "false"'
+    image: local/drupal:latest
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.drupal-redirectscheme.redirectscheme.permanent: "true"
+      traefik.http.middlewares.drupal-redirectscheme.redirectscheme.scheme: https
+      traefik.http.routers.idc-drupal_http.entrypoints: http
+      traefik.http.routers.idc-drupal_http.middlewares: drupal-redirectscheme
+      traefik.http.routers.idc-drupal_http.rule: Host(`islandora-idc.traefik.me`,`islandora-idc-traefik.me`)
+      traefik.http.routers.idc-drupal_http.service: idc-drupal
+      traefik.http.routers.idc-drupal_https.entrypoints: https
+      traefik.http.routers.idc-drupal_https.rule: Host(`islandora-idc.traefik.me`,`islandora-idc-traefik.me`)
+      traefik.http.routers.idc-drupal_https.tls: "true"
+      traefik.http.services.idc-drupal.loadbalancer.server.port: '80'
+    networks:
+      default:
+        aliases:
+        - islandora-idc-traefik.me
+        - islandora-idc.traefik.me
+      gateway: {}
+    volumes:
+    - solr-data:/opt/solr/server/solr:rw
+    - /Users/esm/workspaces/idc/idc-isle-dc/codebase:/var/www/drupal:delegated
+    - drupal-sites-data:/var/www/drupal/web/sites/default/files:rw
+  fits:
+    image: local/fits:latest
+  gemini:
+    environment:
+      GEMINI_DB_PASSWORD: password
+      GEMINI_DB_ROOT_PASSWORD: password
+      GEMINI_JWT_ADMIN_TOKEN: islandora
+      GEMINI_JWT_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----
+
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6uK3nozywVaRCAB3FHdR
+
+        ZNHunSZvN/c31QimZAqQMGxj7JrGh1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2w
+
+        ARr/9abIwG5QeNsrJ8GMt3Z/WICnNeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRK
+
+        sk0BfFSMh+4u3JAdD9tUxUx6AAUXUCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80
+
+        Xrrsu1PYATgrsy69stzCln3KlO5Oxc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9P
+
+        a3SNje4UXN+/1xUfQskxafP8CKVSr8xxtwzSureiskb5/98moAiutpUtp15yyAm0
+
+        rwIDAQAB
+
+        -----END PUBLIC KEY-----'
+    image: local/gemini:latest
+  homarus:
+    environment:
+      HOMARUS_JWT_ADMIN_TOKEN: islandora
+      HOMARUS_JWT_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----
+
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6uK3nozywVaRCAB3FHdR
+
+        ZNHunSZvN/c31QimZAqQMGxj7JrGh1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2w
+
+        ARr/9abIwG5QeNsrJ8GMt3Z/WICnNeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRK
+
+        sk0BfFSMh+4u3JAdD9tUxUx6AAUXUCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80
+
+        Xrrsu1PYATgrsy69stzCln3KlO5Oxc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9P
+
+        a3SNje4UXN+/1xUfQskxafP8CKVSr8xxtwzSureiskb5/98moAiutpUtp15yyAm0
+
+        rwIDAQAB
+
+        -----END PUBLIC KEY-----'
+    image: local/homarus:latest
+  houdini:
+    environment:
+      HOUDINI_JWT_ADMIN_TOKEN: islandora
+      HOUDINI_JWT_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----
+
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6uK3nozywVaRCAB3FHdR
+
+        ZNHunSZvN/c31QimZAqQMGxj7JrGh1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2w
+
+        ARr/9abIwG5QeNsrJ8GMt3Z/WICnNeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRK
+
+        sk0BfFSMh+4u3JAdD9tUxUx6AAUXUCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80
+
+        Xrrsu1PYATgrsy69stzCln3KlO5Oxc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9P
+
+        a3SNje4UXN+/1xUfQskxafP8CKVSr8xxtwzSureiskb5/98moAiutpUtp15yyAm0
+
+        rwIDAQAB
+
+        -----END PUBLIC KEY-----'
+    image: local/houdini:latest
+  hypercube:
+    environment:
+      HYPERCUBE_JWT_ADMIN_TOKEN: islandora
+      HYPERCUBE_JWT_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----
+
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6uK3nozywVaRCAB3FHdR
+
+        ZNHunSZvN/c31QimZAqQMGxj7JrGh1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2w
+
+        ARr/9abIwG5QeNsrJ8GMt3Z/WICnNeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRK
+
+        sk0BfFSMh+4u3JAdD9tUxUx6AAUXUCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80
+
+        Xrrsu1PYATgrsy69stzCln3KlO5Oxc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9P
+
+        a3SNje4UXN+/1xUfQskxafP8CKVSr8xxtwzSureiskb5/98moAiutpUtp15yyAm0
+
+        rwIDAQAB
+
+        -----END PUBLIC KEY-----'
+    image: local/hypercube:latest
+  idp:
+    depends_on:
+    - ldap
+    environment:
+      JETTY_BACKCHANNEL_SSL_KEYSTORE_PASSWORD: password
+      JETTY_BROWSER_SSL_KEYSTORE_PASSWORD: password
+      JETTY_MAX_HEAP: 64m
+    image: emetsger/simplesaml-idp:20200710
+    networks:
+      default:
+        aliases:
+        - idp-idc-traefik.me
+        - idp-idc.traefik.me
+      gateway:
+        aliases:
+        - idp-idc-traefik.me
+        - idp-idc.traefik.me
+    ports:
+    - published: 4443
+      target: 4443
+    - published: 8443
+      target: 8443
+    secrets:
+    - source: idp_backchannel
+    - source: idp_browser
+    - source: idp_encryption
+    - source: idp_sealer
+    - source: idp_signing
+  ldap:
+    image: oapass/ldap:20200610-jhu@sha256:44d56b80763c8f11d5db082d3bd2ab78614fcb8e7b6544a146b48d098a2672ce
+    ports:
+    - published: 389
+      target: 389
+  mariadb:
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    image: local/mariadb:latest
+    labels:
+      traefik.enable: "true"
+      traefik.tcp.routers.idc-mysql_tcp.entrypoints: mysql
+      traefik.tcp.routers.idc-mysql_tcp.rule: HostSNI(`*`)
+      traefik.tcp.routers.idc-mysql_tcp.service: idc-mysql
+      traefik.tcp.services.idc-mysql.loadbalancer.server.port: '3306'
+    networks:
+      default:
+        aliases:
+        - mariadb-idc-traefik.me
+        - mariadb-idc.traefik.me
+      gateway: {}
+    volumes:
+    - mariadb-data:/var/lib/mysql:rw
+    - mariadb-files:/var/lib/mysql-files:rw
+  matomo:
+    depends_on:
+    - mariadb
+    environment:
+      MATOMO_DB_PASSWORD: password
+      MATOMO_DB_ROOT_PASSWORD: password
+      MATOMO_SITE_HOST: islandora-idc.traefik.me
+      MATOMO_SITE_TIMEZONE: America/Halifax
+      MATOMO_USER_EMAIL: admin@example.org
+      MATOMO_USER_PASS: $$2y$$10$$S38e7HPM9LI3aOIvcnRsfuMCm4ipNP572QsvbCK60upoHVJ61hMrS
+    image: local/matomo:latest
+    labels:
+      traefik.enable: "true"
+      traefik.http.middlewares.idc-matomo-customrequestheaders.headers.customrequestheaders.X-Forwarded-Uri: /matomo
+      traefik.http.middlewares.idc-matomo-redirectscheme.redirectscheme.permanent: "true"
+      traefik.http.middlewares.idc-matomo-redirectscheme.redirectscheme.scheme: https
+      traefik.http.middlewares.idc-matomo-stripprefix.stripprefix.prefixes: /matomo
+      traefik.http.middlewares.idc-matomo.chain.middlewares: idc-matomo-stripprefix,idc-matomo-customrequestheaders
+      traefik.http.routers.idc-matomo_http.entrypoints: http
+      traefik.http.routers.idc-matomo_http.middlewares: idc-matomo-redirectscheme
+      traefik.http.routers.idc-matomo_http.rule: Host(`islandora-idc.traefik.me`,`islandora-idc-traefik.me`)
+        && PathPrefix(`/matomo`)
+      traefik.http.routers.idc-matomo_http.service: idc-matomo
+      traefik.http.routers.idc-matomo_https.entrypoints: https
+      traefik.http.routers.idc-matomo_https.middlewares: idc-matomo
+      traefik.http.routers.idc-matomo_https.rule: Host(`islandora-idc.traefik.me`,`islandora-idc-traefik.me`)
+        && PathPrefix(`/matomo`)
+      traefik.http.routers.idc-matomo_https.tls: "true"
+      traefik.http.services.idc-matomo.loadbalancer.server.port: '80'
+    networks:
+      default: {}
+      gateway: {}
+    volumes:
+    - matomo-config-data:/var/www/matomo:rw
+  milliner:
+    image: local/milliner:latest
+  recast:
+    environment:
+      RECAST_JWT_ADMIN_TOKEN: islandora
+      RECAST_JWT_PUBLIC_KEY: '-----BEGIN PUBLIC KEY-----
+
+        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6uK3nozywVaRCAB3FHdR
+
+        ZNHunSZvN/c31QimZAqQMGxj7JrGh1LF8JRX+XAQ+CJcPD9r6xXjKSS1Gqa2Os2w
+
+        ARr/9abIwG5QeNsrJ8GMt3Z/WICnNeaFAkUVviwKWcA61iFJWvTDAuI0hCaxArRK
+
+        sk0BfFSMh+4u3JAdD9tUxUx6AAUXUCdtPyluaBd53wuB0r9xRlPnDw6I9QHfKK80
+
+        Xrrsu1PYATgrsy69stzCln3KlO5Oxc6O8OjMdjC2D2c3HmsO4CKPvvaVuaow/a9P
+
+        a3SNje4UXN+/1xUfQskxafP8CKVSr8xxtwzSureiskb5/98moAiutpUtp15yyAm0
+
+        rwIDAQAB
+
+        -----END PUBLIC KEY-----'
+    image: local/recast:latest
+  solr:
+    image: local/solr:latest
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.idc-solr_http.entrypoints: http
+      traefik.http.routers.idc-solr_http.service: idc-solr
+      traefik.http.services.idc-solr.loadbalancer.server.port: '8983'
+    networks:
+      default:
+        aliases:
+        - solr-idc-traefik.me
+        - solr-idc.traefik.me
+      gateway: {}
+    volumes:
+    - solr-data:/opt/solr/server/solr:rw
+  traefik:
+    command: '--api.insecure=true --api.dashboard=true --api.debug=true --entryPoints.http.address=:80
+      --entryPoints.https.address=:443 --entryPoints.mysql.address=:3306 --entryPoints.postgresql.address=:5432
+      --providers.docker --providers.docker.network=gateway --providers.docker.exposedByDefault=false
+      --providers.file.filename=/etc/traefik/tls.yml ''--providers.docker.defaultRule=Host(`{{
+      index .Labels "com.docker.compose.service" }}-{{ index .Labels "com.docker.compose.project"
+      }}.traefik.me`,`{{ index .Labels "com.docker.compose.service" }}-{{ index .Labels
+      "com.docker.compose.project" }}-traefik.me`)''
+
+      '
+    container_name: traefik
+    image: traefik:2.2.1
+    labels:
+      traefik.http.routers.api.service: api@internal
+    networks:
+      gateway: {}
+    ports:
+    - published: 80
+      target: 80
+    - published: 443
+      target: 443
+    - published: 3306
+      target: 3306
+    - published: 5432
+      target: 5432
+    - published: 8080
+      target: 8080
+    volumes:
+    - /Users/esm/workspaces/idc/idc-isle-dc/certs:/etc/ssl/traefik:rw
+    - /Users/esm/workspaces/idc/idc-isle-dc/tls.yml:/etc/traefik/tls.yml:rw
+    - /var/run/docker.sock:/var/run/docker.sock:rw
+version: '3.7'
+volumes:
+  activemq-data: {}
+  cantaloupe-data: {}
+  drupal-sites-data: {}
+  mariadb-data: {}
+  mariadb-files: {}
+  matomo-config-data: {}
+  solr-data: {}
+
