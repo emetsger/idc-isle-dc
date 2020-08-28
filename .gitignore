@@ -66,17 +66,12 @@ site
 *.retry
 .vscode
 config/proxy/acme.json
-.env 
 
 #===================
 # Drupal and Mariadb files persistant storage
 *_files
 jwt
 syn-keys
-
-#===================
-# User can combined serveral docker-compose.yml files using the `config` command.
-docker-compose.yml
 
 #===================
 # User overrides for environment variables.
