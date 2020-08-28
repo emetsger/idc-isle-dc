@@ -797,11 +797,11 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 # }
 $settings['config_sync_directory'] = '../config/sync';
 $settings['flysystem']['fedora']['driver'] = 'fedora';
-$settings['flysystem']['fedora']['config']['root'] = 'http://fcrepo-idc.traefik.me/fcrepo/rest/';
+$settings['flysystem']['fedora']['config']['root'] = 'http://fcrepo-testidc.traefik.me/fcrepo/rest/';
 $databases['default']['default']['database'] = 'drupal_default';
 $databases['default']['default']['username'] = 'drupal_default';
 $databases['default']['default']['password'] = 'password';
-$databases['default']['default']['host'] = 'mariadb-idc.traefik.me';
+$databases['default']['default']['host'] = 'mariadb-testidc.traefik.me';
 $databases['default']['default']['port'] = '3306';
 $databases['default']['default']['prefix'] = '';
 $databases['default']['default']['driver'] = 'mysql';
