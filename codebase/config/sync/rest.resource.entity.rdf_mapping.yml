@@ -1,0 +1,30 @@
+uuid: fbfc317b-ca04-45a6-a1b9-451ee837f68d
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - jsonld
+    - jwt
+    - jwt_path_auth
+    - rdf
+    - serialization
+    - user
+    - users_jwt
+id: entity.rdf_mapping
+plugin_id: 'entity:rdf_mapping'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - users_jwt_auth
+    - basic_auth
+    - jwt_path_auth
+    - cookie

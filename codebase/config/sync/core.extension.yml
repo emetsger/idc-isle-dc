@@ -69,6 +69,7 @@ module:
   language: 0
   libraries: 0
   link: 0
+  masonry: 0
   matomo: 0
   media: 0
   menu_link_content: 0
@@ -111,6 +112,7 @@ module:
   user: 0
   users_jwt: 0
   views_ui: 0
+  masonry_views: 2
   content_translation: 10
   externalauth: 10
   views: 10

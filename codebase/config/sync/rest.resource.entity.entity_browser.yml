@@ -1,0 +1,30 @@
+uuid: ca883516-c774-44c6-9f3c-fafd3f43a1b1
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - entity_browser
+    - hal
+    - jsonld
+    - jwt
+    - jwt_path_auth
+    - serialization
+    - user
+    - users_jwt
+id: entity.entity_browser
+plugin_id: 'entity:entity_browser'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - users_jwt_auth
+    - basic_auth
+    - jwt_path_auth
+    - cookie

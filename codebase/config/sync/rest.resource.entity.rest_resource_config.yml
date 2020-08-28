@@ -1,0 +1,29 @@
+uuid: a61d42b3-f000-4b35-97b2-4a181fca476a
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - jsonld
+    - jwt
+    - jwt_path_auth
+    - serialization
+    - user
+    - users_jwt
+id: entity.rest_resource_config
+plugin_id: 'entity:rest_resource_config'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - users_jwt_auth
+    - basic_auth
+    - jwt_path_auth
+    - cookie

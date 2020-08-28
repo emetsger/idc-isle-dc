@@ -1,0 +1,30 @@
+uuid: fb7c2ecb-c4cd-4dd7-8ab2-a34000ec9f06
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - jsonld
+    - jwt
+    - jwt_path_auth
+    - media
+    - serialization
+    - user
+    - users_jwt
+id: entity.media_type
+plugin_id: 'entity:media_type'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - users_jwt_auth
+    - basic_auth
+    - jwt_path_auth
+    - cookie
