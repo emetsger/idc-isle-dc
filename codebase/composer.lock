@@ -6091,12 +6091,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Islandora/islandora_defaults.git",
-                "reference": "cb0e15955678c81503a34635370da19942a351cf"
+                "reference": "645e38d06ba3af19e07974071df2722dcad5cb51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Islandora/islandora_defaults/zipball/cb0e15955678c81503a34635370da19942a351cf",
-                "reference": "cb0e15955678c81503a34635370da19942a351cf",
+                "url": "https://api.github.com/repos/Islandora/islandora_defaults/zipball/645e38d06ba3af19e07974071df2722dcad5cb51",
+                "reference": "645e38d06ba3af19e07974071df2722dcad5cb51",
                 "shasum": ""
             },
             "require": {
@@ -6118,7 +6118,7 @@
                 "Islandora",
                 "drupal"
             ],
-            "time": "2020-07-07T05:16:20+00:00"
+            "time": "2020-09-24T19:01:28+00:00"
         },
         {
             "name": "islandora/jsonld",
@@ -14588,6 +14588,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {
