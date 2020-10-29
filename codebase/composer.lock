@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7efeb34bb7dfee499cc1f5fd996db2c3",
+    "content-hash": "c3d5e463cfcad224543d3bc9c5284f1b",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -6181,12 +6181,12 @@
             "version": "dev-8.x-1.x",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Islandora/islandora.git",
+                "url": "https://github.com/emetsger/islandora.git",
                 "reference": "a3d7a55bdf71040082ae6f40b8361dc64cd3f250"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Islandora/islandora/zipball/a3d7a55bdf71040082ae6f40b8361dc64cd3f250",
+                "url": "https://api.github.com/repos/emetsger/islandora/zipball/a3d7a55bdf71040082ae6f40b8361dc64cd3f250",
                 "reference": "a3d7a55bdf71040082ae6f40b8361dc64cd3f250",
                 "shasum": ""
             },

@@ -14,6 +14,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/emetsger/islandora"
         }
     ],
     "require": {
@@ -40,6 +44,7 @@
         "drush/drush": "^9.7.1",
         "islandora-rdm/islandora_fits": "dev-master",
         "islandora/carapace": "dev-8.x-3.x",
+        "islandora/islandora": "dev-esm as dev-8.x-1.x",
         "islandora/islandora_defaults": "dev-8.x-1.x",
         "vlucas/phpdotenv": "^4.0",
         "webflo/drupal-finder": "^1.0.0",
