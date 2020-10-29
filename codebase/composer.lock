@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3d5e463cfcad224543d3bc9c5284f1b",
+    "content-hash": "0dc3277cb4722df7300f45ab8f570daf",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4233,31 +4233,31 @@
         },
         {
             "name": "drupal/migrate_source_csv",
-            "version": "2.2.0",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/migrate_source_csv.git",
-                "reference": "8.x-2.2"
+                "reference": "8.x-3.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/migrate_source_csv-8.x-2.2.zip",
-                "reference": "8.x-2.2",
-                "shasum": "c5ea6fffdfcf9d000279e0524b0a6a04ae78cce4"
+                "url": "https://ftp.drupal.org/files/projects/migrate_source_csv-8.x-3.4.zip",
+                "reference": "8.x-3.4",
+                "shasum": "12990ad8c3b99e16c1b2a1be955aaa28581e5d1c"
             },
             "require": {
-                "drupal/core": "~8.1"
+                "drupal/core": "^8.7 || ^9.0",
+                "league/csv": "^9.1",
+                "php": ">=7.1"
             },
             "require-dev": {
-                "drupal/migrate_plus": "^4",
-                "mikey179/vfsstream": "~1",
-                "phpunit/phpunit": "~4"
+                "drupal/migrate_plus": "5.x-dev"
             },
             "type": "drupal-module",
             "extra": {
                 "drupal": {
-                    "version": "8.x-2.2",
-                    "datestamp": "1527712680",
+                    "version": "8.x-3.4",
+                    "datestamp": "1588260548",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -4266,7 +4266,7 @@
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0+"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
@@ -6178,16 +6178,16 @@
         },
         {
             "name": "islandora/islandora",
-            "version": "dev-8.x-1.x",
+            "version": "dev-esm",
             "source": {
                 "type": "git",
                 "url": "https://github.com/emetsger/islandora.git",
-                "reference": "a3d7a55bdf71040082ae6f40b8361dc64cd3f250"
+                "reference": "a0074cc4079cf947469bd018323307aec3e53426"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emetsger/islandora/zipball/a3d7a55bdf71040082ae6f40b8361dc64cd3f250",
-                "reference": "a3d7a55bdf71040082ae6f40b8361dc64cd3f250",
+                "url": "https://api.github.com/repos/emetsger/islandora/zipball/a0074cc4079cf947469bd018323307aec3e53426",
+                "reference": "a0074cc4079cf947469bd018323307aec3e53426",
                 "shasum": ""
             },
             "require": {
@@ -6200,7 +6200,7 @@
                 "drupal/hook_post_action": "^1.0",
                 "drupal/jwt": "^1.0.0-beta5",
                 "drupal/migrate_plus": "^5.1",
-                "drupal/migrate_source_csv": "^2.1",
+                "drupal/migrate_source_csv": "^3.4",
                 "drupal/migrate_tools": "^5.0",
                 "drupal/prepopulate": "^2.2",
                 "drupal/search_api": "~1.8",
@@ -6219,7 +6219,6 @@
                 "drupal/transliterate_filenames": "Sanitizes filenames when they are uploaded so they don't break your repository."
             },
             "type": "drupal-module",
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0+"
             ],
@@ -6238,10 +6237,14 @@
             "description": "Core Islandora module",
             "homepage": "https://github.com/Islandora/islandora",
             "keywords": [
-                "Islandora",
-                "drupal"
+                "Drupal",
+                "Islandora"
             ],
-            "time": "2020-09-22T18:43:58+00:00"
+            "support": {
+                "issues": "https://github.com/Islandora/documentation/issues",
+                "source": "https://github.com/emetsger/islandora/tree/esm"
+            },
+            "time": "2020-10-29T17:09:10+00:00"
         },
         {
             "name": "islandora/islandora_defaults",
@@ -6719,6 +6722,78 @@
                 "service"
             ],
             "time": "2017-05-10T09:20:27+00:00"
+        },
+        {
+            "name": "league/csv",
+            "version": "9.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/csv.git",
+                "reference": "634322df4aed210fdfbb7c94e434dc860da733d9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/csv/zipball/634322df4aed210fdfbb7c94e434dc860da733d9",
+                "reference": "634322df4aed210fdfbb7c94e434dc860da733d9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "ext-dom": "*",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "phpstan/phpstan": "^0.12.0",
+                "phpstan/phpstan-phpunit": "^0.12.0",
+                "phpstan/phpstan-strict-rules": "^0.12.0",
+                "phpunit/phpunit": "^8.5"
+            },
+            "suggest": {
+                "ext-dom": "Required to use the XMLConverter and or the HTMLConverter classes",
+                "ext-iconv": "Needed to ease transcoding CSV using iconv stream filters"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Csv\\": "src"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://github.com/nyamsprod/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSV data manipulation made easy in PHP",
+            "homepage": "http://csv.thephpleague.com",
+            "keywords": [
+                "convert",
+                "csv",
+                "export",
+                "filter",
+                "import",
+                "read",
+                "transform",
+                "write"
+            ],
+            "time": "2020-09-05T08:40:12+00:00"
         },
         {
             "name": "league/flysystem",
@@ -15695,7 +15770,14 @@
             "time": "2020-07-12T23:59:07+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "dev-8.x-1.x",
+            "alias_normalized": "dev-8.x-1.x",
+            "version": "dev-esm",
+            "package": "islandora/islandora"
+        }
+    ],
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/content_browser": 15,
@@ -15703,6 +15785,7 @@
         "drupal/pdf": 20,
         "islandora-rdm/islandora_fits": 20,
         "islandora/carapace": 20,
+        "islandora/islandora": 20,
         "islandora/islandora_defaults": 20
     },
     "prefer-stable": true,
