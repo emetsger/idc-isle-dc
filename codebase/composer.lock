@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "de7d725ce7d654ba19086cf4de39b9b6",
+    "content-hash": "7efeb34bb7dfee499cc1f5fd996db2c3",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -4639,6 +4639,58 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/rdfui",
                 "error": "require.easyrdf/easyrdf : invalid version constraint (Could not parse version constraint ^1.0 as 0.9.1: Invalid version string \"^1.0\" in \"^1.0 as 0.9.1\", the alias source must be an exact version, if it is a branch name you should prefix it with dev-)"
+            }
+        },
+        {
+            "name": "drupal/remote_stream_wrapper",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/remote_stream_wrapper.git",
+                "reference": "8.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/remote_stream_wrapper-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "1fa53144d3b5d70efc5481f95b6ba36ce927036b"
+            },
+            "require": {
+                "drupal/core": "^8.8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1597938476",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "arthurf",
+                    "homepage": "https://www.drupal.org/user/27259"
+                },
+                {
+                    "name": "becw",
+                    "homepage": "https://www.drupal.org/user/81067"
+                }
+            ],
+            "description": "Provides the ability to use external files over HTTP",
+            "homepage": "https://www.drupal.org/project/remote_stream_wrapper",
+            "support": {
+                "source": "https://git.drupalcode.org/project/remote_stream_wrapper"
             }
         },
         {
