@@ -1,0 +1,10 @@
+uuid: 8f5d1355-ea48-4e58-98d7-25f5d2fea6c4
+langcode: en
+status: true
+dependencies: {  }
+id: test_migration_group_01
+label: 'Test Migration Group (CSV source)'
+description: 'Test migration group'
+source_type: 'CSV resource'
+module: null
+shared_configuration: null
