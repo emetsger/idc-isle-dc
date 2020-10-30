@@ -1,0 +1,26 @@
+uuid: 546624b3-be94-4806-ab9e-7e5ae29489fc
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - field
+    - hal
+    - jsonld
+    - jwt
+    - serialization
+    - user
+id: entity.field_storage_config
+plugin_id: 'entity:field_storage_config'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - basic_auth
+    - cookie
