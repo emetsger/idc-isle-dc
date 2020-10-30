@@ -6238,12 +6238,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/emetsger/islandora.git",
-                "reference": "a0074cc4079cf947469bd018323307aec3e53426"
+                "reference": "750d40e3e94342a59b3420470472eb0b8d859e9c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/emetsger/islandora/zipball/a0074cc4079cf947469bd018323307aec3e53426",
-                "reference": "a0074cc4079cf947469bd018323307aec3e53426",
+                "url": "https://api.github.com/repos/emetsger/islandora/zipball/750d40e3e94342a59b3420470472eb0b8d859e9c",
+                "reference": "750d40e3e94342a59b3420470472eb0b8d859e9c",
                 "shasum": ""
             },
             "require": {
@@ -6300,7 +6300,7 @@
                 "issues": "https://github.com/Islandora/documentation/issues",
                 "source": "https://github.com/emetsger/islandora/tree/esm"
             },
-            "time": "2020-10-29T17:09:10+00:00"
+            "time": "2020-10-30T00:03:01+00:00"
         },
         {
             "name": "islandora/islandora_defaults",
