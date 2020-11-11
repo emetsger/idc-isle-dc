@@ -1,0 +1,10 @@
+uuid: 4fed5c61-aec5-4e17-9b06-6917ba1dd607
+langcode: en
+status: true
+dependencies: {  }
+id: idc_ingest
+label: 'Test IDC Ingest'
+description: 'A full test of ingest into Islandora for IDC'
+source_type: 'CSV resource'
+module: null
+shared_configuration: null

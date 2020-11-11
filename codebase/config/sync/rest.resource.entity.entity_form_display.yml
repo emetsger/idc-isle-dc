@@ -1,0 +1,25 @@
+uuid: 38ac7945-2609-4673-897e-65d617c1123f
+langcode: en
+status: true
+dependencies:
+  module:
+    - basic_auth
+    - hal
+    - jsonld
+    - jwt
+    - serialization
+    - user
+id: entity.entity_form_display
+plugin_id: 'entity:entity_form_display'
+granularity: resource
+configuration:
+  methods:
+    - GET
+  formats:
+    - hal_json
+    - jsonld
+    - json
+  authentication:
+    - jwt_auth
+    - basic_auth
+    - cookie

@@ -1,14 +1,14 @@
-uuid: 45309124-101b-4bc9-93f6-64e5c4d6136f
+uuid: aea2071a-c863-4f4a-b4f1-9e8f188ea28f
 langcode: en
 status: true
 dependencies: {  }
-id: test_migration_02
+id: test_migration_update_02
 class: null
 field_plugin_method: null
 cck_plugin_method: null
 migration_tags: null
 migration_group: test_migration_group_01
-label: 'Entity Creation'
+label: 'Entity Revision'
 source:
   plugin: csv
   path: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQdZW2R-8-gXHBr_Vt2blIITFx5DEIbwFMZSzOx95y63Uqc9-ws1DgW25mw3xUj2UofpZKNeStnlryA/pub?gid=0&single=true&output=csv'
@@ -19,6 +19,6 @@ process:
   field_description: desc
   field_coordinates_text: location
 destination:
-  plugin: 'entity:node'
+  plugin: 'entity_revision:node'
   default_bundle: islandora_object
 migration_dependencies: null
