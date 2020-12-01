@@ -1,0 +1,52 @@
+uuid: 52f4d32a-e761-4f27-8d80-9cc5863a9486
+langcode: en
+status: true
+dependencies: {  }
+id: idc_ingest_images_5
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: idc_ingest_new_collection
+label: 'Ingest Images (5)'
+source:
+  plugin: csv
+  ids:
+    - local_id
+  path: 'Will be populated by the Migrate Source UI'
+  constants:
+    STATUS: true
+    ADMIN: 1
+process:
+  field_media_image/target_id:
+    plugin: file_import
+    source: image_url
+    reuse: false
+    id_only: true
+  field_mime_type:
+    plugin: explode
+    source: image_media_type
+    delimiter: ;
+  name: name
+  field_media_of:
+    plugin: migration_lookup
+    migration: idc_ingest_new_collection_items_5
+    source: node
+    no_stub: true
+  field_media_use:
+    -
+      plugin: explode
+      source: use
+      delimiter: ;
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: islandora_media_use
+  status: constants/STATUS
+  uid: user
+destination:
+  plugin: 'entity:media'
+  default_bundle: image
+migration_dependencies: null
