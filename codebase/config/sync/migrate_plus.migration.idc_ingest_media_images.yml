@@ -32,7 +32,7 @@ process:
   field_media_of:
     plugin: migration_lookup
     migration: idc_ingest_new_items
-    source: node
+    source: nodeid_local
     no_stub: true
   field_media_use:
     -
