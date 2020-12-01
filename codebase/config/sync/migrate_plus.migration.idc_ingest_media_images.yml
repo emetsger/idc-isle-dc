@@ -25,7 +25,7 @@ process:
     id_only: true
   field_mime_type:
     plugin: explode
-    source: image_media_type
+    source: image_mime_type
     delimiter: ;
   name: name
   field_media_of:
