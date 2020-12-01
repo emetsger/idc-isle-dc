@@ -46,7 +46,13 @@ process:
       bundle_key: vid
       bundle: islandora_media_use
   status: constants/STATUS
-  uid: user
+  uid:
+    - plugin: entity_lookup
+      entity_type: user
+      value_key: name
+      source: user
+    - plugin: default_value
+      default_value: 1
 destination:
   plugin: 'entity:media'
   default_bundle: image
