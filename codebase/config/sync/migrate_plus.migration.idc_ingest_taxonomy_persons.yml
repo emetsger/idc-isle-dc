@@ -37,7 +37,7 @@ process:
   field_relationships/target_id:
     plugin: migration_lookup
     migration: idc_ingest_taxonomy_persons
-    source: knows_internal
+    source: knows_local
   field_relationships/rel_type: constants/REL_TYPE
   name:
     plugin: concat
