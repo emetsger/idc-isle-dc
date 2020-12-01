@@ -24,6 +24,7 @@ process:
     reuse: false
     rename: true
     id_only: true
+  field_media_document/description: name
   field_mime_type:
     plugin: explode
     source: document_mime_type
