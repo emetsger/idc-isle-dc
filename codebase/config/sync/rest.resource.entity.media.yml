@@ -7,6 +7,7 @@ dependencies:
       - islandora_core_feature
   module:
     - basic_auth
+    - hal
     - jsonld
     - jwt
     - media
@@ -20,30 +21,37 @@ granularity: method
 configuration:
   GET:
     supported_formats:
+      - hal_json
       - jsonld
       - json
     supported_auth:
-      - basic_auth
       - jwt_auth
+      - basic_auth
       - cookie
   POST:
     supported_formats:
+      - hal_json
+      - jsonld
       - json
     supported_auth:
-      - basic_auth
       - jwt_auth
+      - basic_auth
       - cookie
   DELETE:
     supported_formats:
+      - hal_json
+      - jsonld
       - json
     supported_auth:
-      - basic_auth
       - jwt_auth
+      - basic_auth
       - cookie
   PATCH:
     supported_formats:
+      - hal_json
+      - jsonld
       - json
     supported_auth:
-      - basic_auth
       - jwt_auth
+      - basic_auth
       - cookie
