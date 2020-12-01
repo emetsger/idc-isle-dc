@@ -18,7 +18,7 @@ process:
   field_member_of:
     plugin: migration_lookup
     migration: idc_ingest_new_collection
-    source: collection_id
+    source: collectionid_local
     no_stub: true
   field_model:
     plugin: entity_lookup
