@@ -813,3 +813,4 @@ $databases['default']['default']['port'] = '3306';
 $databases['default']['default']['prefix'] = '';
 $databases['default']['default']['driver'] = 'mysql';
 $databases['default']['default']['namespace'] = 'Drupal\\Core\\Database\\Driver\\mysql';
+$settings['file_public_base_url'] = 'https://islandora-idc.traefik.me/sites/default/files';
