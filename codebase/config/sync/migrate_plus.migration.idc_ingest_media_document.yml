@@ -16,6 +16,7 @@ source:
   path: 'Will be populated by the Migrate Source UI'
   constants:
     STATUS: true
+    DISPLAY: true
     ADMIN: 1
 process:
   field_media_document/target_id:
@@ -25,6 +26,7 @@ process:
     rename: true
     id_only: true
   field_media_document/description: name
+  field_media_document/display: constants/DISPLAY
   field_mime_type:
     plugin: explode
     source: document_mime_type
