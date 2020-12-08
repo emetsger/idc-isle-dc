@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0683d8897cb9bf926d21a669940a7699",
+    "content-hash": "cb6c8a30e8a999377f719697e2160cee",
     "packages": [
         {
             "name": "alchemy/zippy",
@@ -6526,6 +6526,43 @@
                 "openseadragon"
             ],
             "time": "2020-08-31T13:18:00+00:00"
+        },
+        {
+            "name": "jhu_idc/idc_migration",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/emetsger/idc_migration.git",
+                "reference": "56534551bde2673515d9bcf3d45622eba8c84762"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/emetsger/idc_migration/zipball/56534551bde2673515d9bcf3d45622eba8c84762",
+                "reference": "56534551bde2673515d9bcf3d45622eba8c84762",
+                "shasum": ""
+            },
+            "require": {
+                "drupal/migrate_plus": "^5.1",
+                "drupal/migrate_source_csv": "^3.4",
+                "drupal/migrate_tools": "^5.0"
+            },
+            "type": "drupal-module",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Elliot Metsger",
+                    "role": "Owner",
+                    "email": "emetsger@jhu.edu"
+                }
+            ],
+            "description": "Custom migrations for IDC",
+            "support": {
+                "source": "https://github.com/emetsger/idc_migration/tree/master",
+                "issues": "https://github.com/emetsger/idc_migration/issues"
+            },
+            "time": "2020-12-07T23:11:30+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
@@ -15950,7 +15987,8 @@
         "islandora-rdm/islandora_fits": 20,
         "islandora/carapace": 20,
         "islandora/islandora": 20,
-        "islandora/islandora_defaults": 20
+        "islandora/islandora_defaults": 20,
+        "jhu_idc/idc_migration": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
