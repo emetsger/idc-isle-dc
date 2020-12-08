@@ -43,29 +43,82 @@ process:
     source: resource_type
   title: title
   field_description: description
-  field_linked_agent/target_id:
+#  psf_linked_agent:
+#    -
+#      plugin: log
+#      source: linked_agent
+#    -
+#      plugin: explode
+#      delimiter: ;
+#    -
+#      plugin: log
+#    -
+#      plugin: deepen
+#      keyname: agents
+#    -
+#      plugin: log
+  psf_linked_agent:
+    -
+      plugin: log
+      source: linked_agent
     -
       plugin: explode
       source: linked_agent
-      delimiter: ;
+      delimiter: '|'
     -
-      plugin: extract
-      index:
-        - 1
+      plugin: callback
+      callable: trim
     -
-      plugin: explode
-      delimiter: /
+      plugin: log
     -
-      plugin: array_pop
-  field_linked_agent/rel_type:
+      plugin: deepen
+      keyname: agents
     -
-      plugin: explode
-      source: linked_agent
-      delimiter: ;
-    -
-      plugin: extract
-      index:
-        - 0
+      plugin: sub_process
+      process:
+        target_id:
+          -
+            plugin: explode
+            source: agents
+            delimiter: ;
+          -
+            plugin: log
+          -
+            plugin: extract
+            index:
+              - 1
+          -
+            plugin: explode
+            delimiter: /
+          -
+            plugin: array_pop
+          -
+            plugin: log
+        rel_type:
+          -
+            plugin: explode
+            source: agents
+            delimiter: ;
+          -
+            plugin: log
+          -
+            plugin: extract
+            index:
+              - 0
+          -
+            plugin: log
+        psf_moo:
+          -
+            plugin: get
+            source:
+              - '@psf_target_id'
+              - '@psf_rel_type'
+          -
+            plugin: log
+#    - plugin: callback
+#      callable: trim
+    - plugin: log
+  field_linked_agent: '@psf_linked_agent'
 destination:
   plugin: 'entity:node'
   default_bundle: islandora_object
