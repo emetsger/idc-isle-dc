@@ -47,11 +47,13 @@ process:
       bundle: islandora_media_use
   status: constants/STATUS
   uid:
-    - plugin: entity_lookup
+    -
+      plugin: entity_lookup
       entity_type: user
       value_key: name
       source: user
-    - plugin: default_value
+    -
+      plugin: default_value
       default_value: 1
 destination:
   plugin: 'entity:media'
