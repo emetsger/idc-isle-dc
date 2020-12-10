@@ -48,6 +48,7 @@ process:
       plugin: explode
       source: linked_agent
       delimiter: '|'
+      strict: false
     -
       plugin: deepen
       keyname: agents
@@ -55,6 +56,10 @@ process:
       plugin: sub_process
       process:
         target_id:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: agents
           -
             plugin: explode
             source: agents
@@ -69,6 +74,10 @@ process:
           -
             plugin: array_pop
         rel_type:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: agents
           -
             plugin: explode
             source: agents
