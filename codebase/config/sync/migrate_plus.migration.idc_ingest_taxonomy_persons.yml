@@ -29,9 +29,56 @@ process:
   field_person_preferred_name/generational: generational
   field_cat_date_begin: born
   field_cat_date_end: died
-  field_authority_link/uri: authority_link
-  field_authority_link/title: authority_title
-  field_authority_link/source: authority_source
+  field_authority_link:
+    -
+      plugin: explode
+      source: authority
+      delimiter: '|'
+      strict: false
+    -
+      plugin: deepen
+    -
+      plugin: sub_process
+      process:
+        uri:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: value
+          -
+            plugin: explode
+            source: value
+            delimiter: ;
+          -
+            plugin: extract
+            index:
+              - 0
+        title:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: value
+          -
+            plugin: explode
+            source: value
+            delimiter: ;
+          -
+            plugin: extract
+            index:
+              - 1
+        source:
+          -
+            plugin: skip_on_empty
+            method: process
+            source: value
+          -
+            plugin: explode
+            source: value
+            delimiter: ;
+          -
+            plugin: extract
+            index:
+              - 2
   description/value: description
   description/format:
     plugin: default_value
