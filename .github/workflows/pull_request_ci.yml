@@ -1,0 +1,41 @@
+name: PR CI
+on: [pull_request]
+
+jobs:
+  build_and_test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      # Check out current commit
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Make sure buildkit is enabled
+      - name: Enable buildkit
+        shell: bash
+        run: |
+          echo '{"experimental": "enabled"}' > ~/.docker/config.json
+
+      # Initially run the development environment to make sure that succeeds
+      - name: Build Dev
+        run: make up
+
+      # Build and run the static environment
+      - name: Build Static
+        run: docker-compose down -v && make static-docker-compose.yml up
+
+      # Run end-to-end tests
+      - name: End-To-End Tests
+        run: |
+          mkdir -p end-to-end/reports
+          chmod a+rwx end-to-end/reports
+          make test
+
+      # Upload artifacts if tests fail
+      - name: Test Failure Forensics
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: end-to-end-reports
+          path: end-to-end/reports
