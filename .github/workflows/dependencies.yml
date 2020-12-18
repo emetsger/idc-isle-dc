@@ -59,13 +59,16 @@ jobs:
           name: pr-dependencies
       - name: Unzip artifacts
         run: |
-          unzip *-dependencies.zip
           ls
+          ls idc-isle-dc/
+          unzip idc-isle-dc/*-dependencies.zip
+          ls
+          ls idc-isle-dc/
       - name: Calculate diff
         run: |
           echo "Dependency diff between development base branch ${{ github.base_ref }} and PR branch ${{ github.head_ref }}" >> diff.out
           echo '```diff' >> diff.out
-          git diff --no-index -w deps.development* deps.pr* >> diff.out
+          git diff --no-index -w idc-isle-dc/deps.development* idc-isle-dc/deps.pr* >> diff.out
           echo '```' >> diff.out
       - name: Comment on PR
         uses: machine-learning-apps/pr-comment@master
