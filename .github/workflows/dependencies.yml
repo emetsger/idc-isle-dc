@@ -72,15 +72,17 @@ jobs:
         with:
           name: pr-dependencies
       - name: Calculate diff
-        # N.B. swallow exit code from git diff
+        # ignore exit code from git diff
+        shell: bash {0}
         run: |
           echo "Generating diff between ${{ needs.base.outputs.dep-filename }} and ${{ needs.pr.outputs.dep-filename }} to ${DIFF_FILENAME}"
           echo "Dependency diff between development base branch ${{ github.base_ref }} (${{ github.event.pull_request.base.sha }}) and PR branch ${{ github.head_ref }} (${{ github.event.pull_request.head.sha }}):" >> ${DIFF_FILENAME}
           echo '```diff' >> ${DIFF_FILENAME}
-          if [ $(git diff --no-index -w ${{ needs.base.outputs.dep-filename }} ${{ needs.pr.outputs.dep-filename }} >> ${DIFF_FILENAME}) ] ; then \
-            echo "> This PR has no dependency differences with the base branch" > ${DIFF_FILENAME} \
+          git diff --no-index -w ${{ needs.base.outputs.dep-filename }} ${{ needs.pr.outputs.dep-filename }} >> ${DIFF_FILENAME}
+          if [ $? -gt 0 ] ; then \
+            echo '```' >> ${DIFF_FILENAME} ; \
           else \
-            echo '```' >> ${DIFF_FILENAME}
+            echo "> This PR has no dependency differences with the base branch" > ${DIFF_FILENAME} ; \
           fi
       - name: Comment on PR
         uses: machine-learning-apps/pr-comment@1.0.0
