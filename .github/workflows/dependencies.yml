@@ -63,8 +63,6 @@ jobs:
     env:
       DIFF_FILENAME: out.diff
     steps:
-      - name: Checkout PR Branch
-        uses: actions/checkout@v2
       - name: Download Base Deps
         uses: actions/download-artifact@v2
         with:
@@ -76,12 +74,9 @@ jobs:
       - name: Calculate diff
         run: |
           echo "Generating diff between ${{ needs.base.outputs.dep-filename }} and ${{ needs.pr.outputs.dep-filename }} to ${DIFF_FILENAME}"
-          ls
           echo "Dependency diff between development base branch ${{ github.base_ref }} (${{ github.event.pull_request.base.sha }}) and PR branch ${{ github.head_ref }} ((${{ github.event.pull_request.head.sha }})" >> ${DIFF_FILENAME}
           echo '```diff' >> ${DIFF_FILENAME}
-          echo 'Running git diff'
-          git diff --no-index -w ${{ needs.base.outputs.dep-filename }} ${{ needs.pr.outputs.dep-filename }} >> ${DIFF_FILENAME}
-          echo 'Adding diff trailer'
+          git diff --no-index -w ${{ needs.base.outputs.dep-filename }} ${{ needs.pr.outputs.dep-filename }} >> ${DIFF_FILENAME} || true
           echo '```' >> ${DIFF_FILENAME}
       - name: Comment on PR
         uses: machine-learning-apps/pr-comment@master
