@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      DEP_FILENAME: deps.${{ github.event.base.sha }}
+      DEP_FILENAME: deps.${{ github.event.pull_request.base.sha }}
     outputs:
       dep-filename: ${{ steps.base-dep-filename.outputs.dep_filename }}
     steps:
@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      DEP_FILENAME: deps.pr-${{ github.event.number }}.${{ github.event.head.sha }}
+      DEP_FILENAME: deps.pr-${{ github.event.number }}.${{ github.event.pull_request.head.sha }}
     outputs:
       dep-filename: ${{ steps.pr-dep-filename.outputs.dep_filename }}
     steps:
@@ -77,9 +77,11 @@ jobs:
         run: |
           echo "Generating diff between ${{ needs.base.outputs.dep-filename }} and ${{ needs.pr.outputs.dep-filename }} to ${DIFF_FILENAME}"
           ls
-          echo "Dependency diff between development base branch ${{ github.base_ref }} (${{ github.event.base.sha }}) and PR branch ${{ github.head_ref }} ((${{ github.event.head.sha }})" >> ${DIFF_FILENAME}
+          echo "Dependency diff between development base branch ${{ github.base_ref }} (${{ github.event.pull_request.base.sha }}) and PR branch ${{ github.head_ref }} ((${{ github.event.pull_request.head.sha }})" >> ${DIFF_FILENAME}
           echo '```diff' >> ${DIFF_FILENAME}
+          echo 'Running git diff'
           git diff --no-index -w ${{ needs.base.outputs.dep-filename }} ${{ needs.pr.outputs.dep-filename }} >> ${DIFF_FILENAME}
+          echo 'Adding diff trailer'
           echo '```' >> ${DIFF_FILENAME}
       - name: Comment on PR
         uses: machine-learning-apps/pr-comment@master
