@@ -79,7 +79,6 @@ jobs:
           ls
           echo "Dependency diff between development base branch ${{ github.base_ref }} and PR branch ${{ github.head_ref }}" >> ${DIFF_FILENAME}
           echo '```diff' >> ${DIFF_FILENAME}
-#          git diff --no-index -w ${{ needs.base.outputs.dep-filename }} ${{ needs.pr.outputs.dep-filename }} >> ${DIFF_FILENAME}
           echo '```' >> ${DIFF_FILENAME}
       - name: Comment on PR
         uses: machine-learning-apps/pr-comment@master
