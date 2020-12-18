@@ -57,6 +57,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: pr-dependencies
+      - name: Unzip artifacts
+        run: |
+          unzip *-dependencies.zip
+          ls
       - name: Calculate diff
         run: |
           echo "Dependency diff between development base branch ${{ github.base_ref }} and PR branch ${{ github.head_ref }}" >> diff.out
