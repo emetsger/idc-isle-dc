@@ -541,7 +541,7 @@ type JsonApiLanguageValue struct {
 // JsonApiLanguageValue
 func (lv JsonApiLanguageValue) langCode(t *testing.T) string {
 	jsonApiLang := JsonApiLanguage{}
-	lv.resolve(t, jsonApiLang)
+	lv.resolve(t, &jsonApiLang)
 	return jsonApiLang.JsonApiData[0].JsonApiAttributes.LanguageCode
 }
 
